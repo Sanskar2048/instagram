@@ -4,7 +4,7 @@
   "description": "find the person who is not following",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "sanskar",
   "license": "ISC",
