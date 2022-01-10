@@ -24,12 +24,14 @@ app.post('/', async (req, res) =>{
     const client = new Instagram({ username, password })
     try {
         await client.login()
+        console.log('name')
         const inst = await client.getUserByUsername({ username: client.credentials.username })
         const followers = await client.getFollowers({ userId: inst.id, first: inst.edge_followed_by.count })
         const folloing = await client.getFollowings({ userId: inst.id, first: inst.edge_follow.count })
-        var intersectinguser = getArraysIntersection(followers.data, folloing.data);
-        var intersectinguser = getArraysSubrection(folloing.data, intersectinguser);
+        var intersectinguser = await getArraysIntersection(followers.data, folloing.data);
+        var intersectinguser = await getArraysSubrection(folloing.data, intersectinguser);
         var ans = [];
+        console.log('name')
         ans.push({size: intersectinguser.length})
         intersectinguser.forEach(user => {
             ans.push({full_name : user.full_name, username : user.username, profile_pic_url: user.profile_pic_url});
@@ -37,8 +39,8 @@ app.post('/', async (req, res) =>{
         res.send(ans)
         // await client.logout()
     }catch (err) {
-        res.send('Error');
-        console.log(err);
+        res.send(err);
+        //console.log(err);
     }
 })
 
